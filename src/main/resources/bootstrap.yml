@@ -1,18 +1,12 @@
-server:
-  error:
-    include-binding-errors: always
-    include-message: always
-  port: '8092'
 spring:
-  data:
-    mongodb:
-      database: Registers
-      uri: mongodb+srv://aracely10:aracely1008@cluster0.biago.mongodb.net/?retryWrites=true&w=majority
-
-    application:
-      name: control-service
+  application:
+    name: control-service
   cloud:
     config:
       uri: http://44.208.218.57:8081
       username: kalkstein
       password: th3_eth3r
+  boot:
+    admin:
+      client:
+        url: http://34.232.227.255:8086
