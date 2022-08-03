@@ -61,10 +61,13 @@ public class ControlServiceImp implements ControlService{
     @Override
     public ControlMeasure getControlMeasure(Long id) {
         ControlMeasure controlMeasure = this.mongoOperations.findOne(new Query(Criteria.where("id").is(id)), ControlMeasure.class);
-        Measure measure= measureClient.getMeasure(controlMeasure.getMeasureId());
-        User user = userClient.getUser(controlMeasure.getUserId());
-        controlMeasure.setMeasure(measure);
-        controlMeasure.setUser(user);
+        if (controlMeasure != null){
+            Measure measure= measureClient.getMeasure(controlMeasure.getMeasureId());
+            User user = userClient.getUser(controlMeasure.getUserId());
+            controlMeasure.setMeasure(measure);
+            controlMeasure.setUser(user);
+        }
+
         return controlMeasure;
     }
 
@@ -77,6 +80,8 @@ public class ControlServiceImp implements ControlService{
         }
         Measure measure= measureClient.findLastMeasure();
         User user = userClient.getUser(measure.getUserId());
+        controlMeasure.setMeasure(measure);
+        controlMeasure.setUser(user);
         controlMeasure.setMeasureId(measure.getId());
         controlMeasure.setUserId(measure.getUserId());
         Double systolic = measure.getSystolicPressure();

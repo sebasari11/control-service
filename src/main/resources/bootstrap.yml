@@ -13,4 +13,6 @@ spring:
       name: control-service
   cloud:
     config:
-      enabled: false
+      uri: http://44.208.218.57:8081
+      username: kalkstein
+      password: th3_eth3r

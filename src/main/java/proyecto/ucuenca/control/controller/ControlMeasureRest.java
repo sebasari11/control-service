@@ -54,7 +54,7 @@ public class ControlMeasureRest {
 
     @PostMapping
     public ResponseEntity<ControlMeasure> createControlMeasure(@Valid @RequestBody ControlMeasure controlMeasure, BindingResult result){
-        log.info("Creating Measure: {}", controlMeasure);
+        log.info("Creating Control Measure: {}", controlMeasure);
         if (result.hasErrors()){
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, this.formatMessage(result));
 
