@@ -10,3 +10,5 @@ spring:
     admin:
       client:
         url: http://34.232.227.255:8086
+      instance:
+        service-base-url: https://${DOMAIN_NAME:control-service.herokuapp.com}
