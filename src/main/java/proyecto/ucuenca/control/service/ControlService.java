@@ -10,5 +10,6 @@ public interface ControlService {
     public ControlMeasure updateControlMeasure(ControlMeasure controlMeasure);
     public ControlMeasure deleteControlMeasure(ControlMeasure controlMeasure);
     public ControlMeasure getControlMeasure(Long id);
-    public List<ControlMeasure> findLastControlMeasures();
+    public List<ControlMeasure> getControlMeasuresByUser(Long id);
+    public ControlMeasure getLastControlMeasureByUser(Long id);
 }

@@ -127,12 +127,18 @@ public class ControlServiceImp implements ControlService{
 
 
     @Override
-    public List<ControlMeasure> findLastControlMeasures() {
-        Query query = new Query();
+    public List<ControlMeasure> getControlMeasuresByUser(Long id) {
+        Query query = new Query(Criteria.where("userId").is(id));
         query.with(Sort.by(Sort.Direction.DESC, "id"));
-        query.limit(10);
         List<ControlMeasure> controlMeasuresDB = this.mongoOperations.find(query,ControlMeasure.class);
         return controlMeasuresDB;
+    }
+
+    @Override
+    public ControlMeasure getLastControlMeasureByUser(Long id) {
+        List<ControlMeasure> controlMeasuresDB = this.getControlMeasuresByUser(id);
+        ControlMeasure controlMeasure = controlMeasuresDB.get(0);
+        return controlMeasure;
     }
 
 

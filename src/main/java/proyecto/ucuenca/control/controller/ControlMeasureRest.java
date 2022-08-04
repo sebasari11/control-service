@@ -20,6 +20,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 @Slf4j
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/control")
 public class ControlMeasureRest {
@@ -30,7 +31,7 @@ public class ControlMeasureRest {
     // -------------------Retrieve All ControlMeasures--------------------------------------------
     @GetMapping
     public ResponseEntity<List<ControlMeasure>> listAllControlMeasures(){
-        List<ControlMeasure> controls= new ArrayList<>();
+        List<ControlMeasure> controls = new ArrayList<>();
         controls = controlMeasureService.findAll();
         if (controls.isEmpty()){
             return ResponseEntity.noContent().build();
@@ -41,10 +42,33 @@ public class ControlMeasureRest {
     // -------------------Retrieve Single Control Measure------------------------------------------
     @GetMapping(value = "/{id}")
     public ResponseEntity<ControlMeasure> getControlMeasure(@PathVariable("id") long id) {
-        log.info("Fetching Measure with id {}", id);
+        log.info("Fetching Control Measure with id {}", id);
         ControlMeasure control = controlMeasureService.getControlMeasure(id);
         if (  null == control) {
-            log.error("Measure with id {} not found.", id);
+            log.error(" Control Measure with id {} not found.", id);
+            return  ResponseEntity.notFound().build();
+        }
+        return  ResponseEntity.ok(control);
+    }
+
+    // -------------------Retrieve Control Measures by Id------------------------------------------
+    @GetMapping(value = "/history/{id}")
+    public ResponseEntity<List<ControlMeasure>> getControlMeasuresByUser(@PathVariable("id") long id) {
+        log.info("Fetching  Control Measures with user id {}", id);
+        List<ControlMeasure> controls = controlMeasureService.getControlMeasuresByUser(id);
+        if (controls.isEmpty()){
+            return ResponseEntity.noContent().build();
+        }
+        return ResponseEntity.ok(controls);
+    }
+
+    // -------------------Retrieve Control Measures by Id------------------------------------------
+    @GetMapping(value = "/lastControlByUser/{id}")
+    public ResponseEntity<ControlMeasure> getControlMeasureByUser(@PathVariable("id") long id) {
+        log.info("Fetching  Control Measure with user id {}", id);
+        ControlMeasure control = controlMeasureService.getLastControlMeasureByUser(id);
+        if (  null == control) {
+            log.error(" Control Measure with user id {} not found.", id);
             return  ResponseEntity.notFound().build();
         }
         return  ResponseEntity.ok(control);
@@ -66,12 +90,12 @@ public class ControlMeasureRest {
     // ------------------- Update a ControlMeasure ------------------------------------------------
     @PutMapping(value = "/{id}")
     public ResponseEntity<?> updateControlMeasure(@PathVariable("id") long id, @RequestBody ControlMeasure controlMeasure) {
-        log.info("Updating Measure with id {}", id);
+        log.info("Updating  Control Measure with id {}", id);
 
         ControlMeasure currentControlMeasure = controlMeasureService.getControlMeasure(id);
 
         if ( null == currentControlMeasure ) {
-            log.error("Unable to update. Measure with id {} not found.", id);
+            log.error("Unable to update.  Control Measure with id {} not found.", id);
             return  ResponseEntity.notFound().build();
         }
         controlMeasure.setId(id);
@@ -82,11 +106,11 @@ public class ControlMeasureRest {
     // ------------------- Delete a Control-----------------------------------------
     @DeleteMapping(value = "/{id}")
     public ResponseEntity<ControlMeasure> deleteControlMeasure(@PathVariable("id") long id) {
-        log.info("Fetching & Deleting ControlMeasure with id {}", id);
+        log.info("Fetching & Deleting Control Measure with id {}", id);
 
         ControlMeasure controlMeasure = controlMeasureService.getControlMeasure(id);
         if ( null == controlMeasure ) {
-            log.error("Unable to delete. Measure with id {} not found.", id);
+            log.error("Unable to delete.  Control Measure with id {} not found.", id);
             return  ResponseEntity.notFound().build();
         }
         controlMeasure = controlMeasureService.deleteControlMeasure(controlMeasure);
