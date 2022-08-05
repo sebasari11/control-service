@@ -1,5 +1,6 @@
 package proyecto.ucuenca.control.service;
 
+import proyecto.ucuenca.control.entity.ControlData;
 import proyecto.ucuenca.control.entity.ControlMeasure;
 
 import java.util.List;
@@ -12,4 +13,5 @@ public interface ControlService {
     public ControlMeasure getControlMeasure(Long id);
     public List<ControlMeasure> getControlMeasuresByUser(Long id);
     public ControlMeasure getLastControlMeasureByUser(Long id);
+    public ControlData createControlData(Long controlID);
 }

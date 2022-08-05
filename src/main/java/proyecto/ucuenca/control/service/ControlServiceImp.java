@@ -14,6 +14,7 @@ import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Service;
 import proyecto.ucuenca.control.client.MeasureClient;
 import proyecto.ucuenca.control.client.UserClient;
+import proyecto.ucuenca.control.entity.ControlData;
 import proyecto.ucuenca.control.entity.ControlMeasure;
 import proyecto.ucuenca.control.model.Measure;
 import proyecto.ucuenca.control.model.User;
@@ -94,6 +95,34 @@ public class ControlServiceImp implements ControlService{
         controlMeasure.setCreate(new Date());
         controlMeasureDB = mongoOperations.save(controlMeasure);
         return controlMeasureDB;
+
+
+    }
+
+    @Override
+    public ControlData createControlData(Long controlID) {
+        ControlMeasure controlMeasureDB= getControlMeasure(controlID);
+        ControlData controlData = new ControlData();
+        Measure measure = measureClient.getMeasure(controlMeasureDB.getMeasureId());
+        User user = userClient.getUser(controlMeasureDB.getUserId());
+        controlData.setId(controlMeasureDB.getId());
+        controlData.setUserId(user.getId());
+        controlData.setMeasureId(measure.getId());
+        controlData.setPam(controlMeasureDB.getPam());
+        controlData.setCreate(controlMeasureDB.getCreate());
+        controlData.setStatus(controlMeasureDB.getStatus());
+        controlData.setSystolicPressure(measure.getSystolicPressure());
+        controlData.setDiastolicPressure(measure.getDiastolicPressure());
+        controlData.setSteps(measure.getSteps());
+        controlData.setPulse(measure.getPulse());
+        controlData.setNumberID(user.getNumberID());
+        controlData.setFirstName(user.getFirstName());
+        controlData.setLastName(user.getLastName());
+        controlData.setSex(user.getSex());
+        controlData.setAge(user.getAge());
+        controlData.setState(user.getState());
+        controlData = mongoOperations.save(controlData);
+        return controlData;
 
 
     }

@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
+import proyecto.ucuenca.control.entity.ControlData;
 import proyecto.ucuenca.control.entity.ControlMeasure;
 import proyecto.ucuenca.control.service.ControlService;
 
@@ -76,7 +77,7 @@ public class ControlMeasureRest {
 
     // -------------------Create a ControlMeasure--------------------------------------------
 
-    @PostMapping
+    @PostMapping(value = "/controlData/{id}")
     public ResponseEntity<ControlMeasure> createControlMeasure(@Valid @RequestBody ControlMeasure controlMeasure, BindingResult result){
         log.info("Creating Control Measure: {}", controlMeasure);
         if (result.hasErrors()){
@@ -85,6 +86,19 @@ public class ControlMeasureRest {
         }
         ControlMeasure controlMeasureBD = controlMeasureService.createControlMeasure(controlMeasure);
         return ResponseEntity.status(HttpStatus.CREATED).body(controlMeasureBD);
+    }
+
+    // -------------------Create a ControlData--------------------------------------------
+
+    @PostMapping
+    public ResponseEntity<ControlData> createControlData(@PathVariable("id") long id, BindingResult result){
+        log.info("Creating Control Data: {}", id);
+        if (result.hasErrors()){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, this.formatMessage(result));
+
+        }
+        ControlData controlDataBD = controlMeasureService.createControlData(id);
+        return ResponseEntity.status(HttpStatus.CREATED).body(controlDataBD);
     }
 
     // ------------------- Update a ControlMeasure ------------------------------------------------
