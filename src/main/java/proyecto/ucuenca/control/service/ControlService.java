@@ -13,5 +13,5 @@ public interface ControlService {
     public ControlMeasure getControlMeasure(Long id);
     public List<ControlMeasure> getControlMeasuresByUser(Long id);
     public ControlMeasure getLastControlMeasureByUser(Long id);
-    public ControlData createControlData(Long controlID);
+    public ControlData createControlData(ControlData controlData);
 }

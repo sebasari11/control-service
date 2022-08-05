@@ -100,9 +100,8 @@ public class ControlServiceImp implements ControlService{
     }
 
     @Override
-    public ControlData createControlData(Long controlID) {
-        ControlMeasure controlMeasureDB= getControlMeasure(controlID);
-        ControlData controlData = new ControlData();
+    public ControlData createControlData(ControlData controlData) {
+        ControlMeasure controlMeasureDB= getControlMeasure(controlData.getId());
         Measure measure = measureClient.getMeasure(controlMeasureDB.getMeasureId());
         User user = userClient.getUser(controlMeasureDB.getUserId());
         controlData.setId(controlMeasureDB.getId());

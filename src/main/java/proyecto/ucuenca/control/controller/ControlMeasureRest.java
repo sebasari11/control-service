@@ -90,14 +90,14 @@ public class ControlMeasureRest {
 
     // -------------------Create a ControlData--------------------------------------------
 
-    @PostMapping(value = "/controlData/{id}")
-    public ResponseEntity<ControlData> createControlData(@PathVariable("id") long id, BindingResult result){
-        log.info("Creating Control Data: {}", id);
+    @PostMapping(value = "/controlData")
+    public ResponseEntity<ControlData> createControlData(@RequestBody ControlData controlData, BindingResult result){
+        log.info("Creating Control Data: {}", controlData);
         if (result.hasErrors()){
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, this.formatMessage(result));
 
         }
-        ControlData controlDataBD = controlMeasureService.createControlData(id);
+        ControlData controlDataBD = controlMeasureService.createControlData(controlData);
         return ResponseEntity.status(HttpStatus.CREATED).body(controlDataBD);
     }
 
