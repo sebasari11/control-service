@@ -44,7 +44,7 @@ public class ControlMeasure {
     User user;
 
     public String getStatusBySex(Boolean gender){
-        boolean highPressure = this.measure.getSystolicPressure() > 115 && this.measure.getDiastolicPressure() > 70;
+        boolean highPressure = this.measure.getSystolicPressure() > 145 && this.measure.getDiastolicPressure() > 70;
         if (highPressure && !this.isExercising){
             return "ALERTA!, Presion Alta Detectada";
 
