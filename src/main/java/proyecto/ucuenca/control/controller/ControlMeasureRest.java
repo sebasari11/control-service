@@ -77,7 +77,7 @@ public class ControlMeasureRest {
 
     // -------------------Create a ControlMeasure--------------------------------------------
 
-    @PostMapping(value = "/controlData/{id}")
+    @PostMapping
     public ResponseEntity<ControlMeasure> createControlMeasure(@Valid @RequestBody ControlMeasure controlMeasure, BindingResult result){
         log.info("Creating Control Measure: {}", controlMeasure);
         if (result.hasErrors()){
@@ -90,7 +90,7 @@ public class ControlMeasureRest {
 
     // -------------------Create a ControlData--------------------------------------------
 
-    @PostMapping
+    @PostMapping(value = "/controlData/{id}")
     public ResponseEntity<ControlData> createControlData(@PathVariable("id") long id, BindingResult result){
         log.info("Creating Control Data: {}", id);
         if (result.hasErrors()){
