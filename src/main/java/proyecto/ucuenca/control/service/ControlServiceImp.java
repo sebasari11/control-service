@@ -131,6 +131,15 @@ public class ControlServiceImp implements ControlService{
         Query query = new Query(Criteria.where("userId").is(id));
         query.with(Sort.by(Sort.Direction.DESC, "id"));
         List<ControlMeasure> controlMeasuresDB = this.mongoOperations.find(query,ControlMeasure.class);
+        controlMeasuresDB.forEach((control -> {
+            if (control != null){
+                User user = userClient.getUser(control.getUserId());
+                Measure measure = measureClient.getMeasure(control.getMeasureId());
+                control.setUser(user);
+                control.setMeasure(measure);
+            }
+        }));
+
         return controlMeasuresDB;
     }
 
@@ -138,6 +147,12 @@ public class ControlServiceImp implements ControlService{
     public ControlMeasure getLastControlMeasureByUser(Long id) {
         List<ControlMeasure> controlMeasuresDB = this.getControlMeasuresByUser(id);
         ControlMeasure controlMeasure = controlMeasuresDB.get(0);
+        if (controlMeasure != null){
+            User user = userClient.getUser(id);
+            Measure measure = measureClient.getMeasure(controlMeasure.getMeasureId());
+            controlMeasure.setUser(user);
+            controlMeasure.setMeasure(measure);
+        }
         return controlMeasure;
     }
 

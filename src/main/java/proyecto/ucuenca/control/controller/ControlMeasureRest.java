@@ -62,7 +62,7 @@ public class ControlMeasureRest {
         return ResponseEntity.ok(controls);
     }
 
-    // -------------------Retrieve Control Measures by Id------------------------------------------
+    // -------------------Retrieve Control Measures by User------------------------------------------
     @GetMapping(value = "/lastControlByUser/{id}")
     public ResponseEntity<ControlMeasure> getControlMeasureByUser(@PathVariable("id") long id) {
         log.info("Fetching  Control Measure with user id {}", id);
