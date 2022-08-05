@@ -130,6 +130,7 @@ public class ControlServiceImp implements ControlService{
     public List<ControlMeasure> getControlMeasuresByUser(Long id) {
         Query query = new Query(Criteria.where("userId").is(id));
         query.with(Sort.by(Sort.Direction.DESC, "id"));
+        query.limit(10);
         List<ControlMeasure> controlMeasuresDB = this.mongoOperations.find(query,ControlMeasure.class);
         controlMeasuresDB.forEach((control -> {
             if (control != null){
